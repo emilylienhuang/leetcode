@@ -1,17 +1,17 @@
 class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-        int starting_station = 0;
-        int prev_gas = 0;
-        int curr_gas = 0;
+        int startingStation = 0;
+        int currGas = 0;
+        int totalGas = 0;
         for (int i = 0; i < gas.size(); i++){
-            curr_gas += gas[i] - cost[i];
-            if (curr_gas < 0){
-                prev_gas += curr_gas;
-                curr_gas = 0;
-                starting_station = i+1;
+            totalGas += gas[i] - cost[i];
+            currGas += gas[i] - cost[i];
+            if (currGas < 0){
+                startingStation = i+1;
+                currGas = 0;
             }
         }
-        return (prev_gas + curr_gas) >= 0 ? starting_station : -1;
+        return totalGas >= 0 ? startingStation : -1;
     }
 };
