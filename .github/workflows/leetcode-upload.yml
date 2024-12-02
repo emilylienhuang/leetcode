@@ -1,0 +1,44 @@
+name: LeetCode Automated Upload
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight (UTC)
+  workflow_dispatch: # Allows manual trigger of the workflow
+
+jobs:
+  leetcode_upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Step 4: Run the LeetCode automation script
+      - name: Fetch and upload LeetCode solutions
+        run: |
+          python leetcode_automation.py
+        timeout-minutes: 30 # Extend timeout to 30 minutes
+        continue-on-error: true # Allow the job to continue even if errors occur
+
+      # Step 5: Commit and push changes to GitHub
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Automated upload of LeetCode solutions"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
