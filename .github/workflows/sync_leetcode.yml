@@ -5,9 +5,26 @@ on:
     - cron: '0 8 * * 6'  # Runs every Saturday at 8 AM
   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+jobs:name: Sync LeetCode Solutions
+
+on:
+  schedule:
+    - cron: '0 8 * * 6'  # Runs every Saturday at 8 AM
+  workflow_dispatch:
+
+jobs:  bui    runs-on: ubuntu-latest
+    steps:
+      - name: Sync LeetCode Solutions
+        uses: joshcai/leetcode-sync@v1.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+          destination-folder: 'leetcode_solutions'
+          verbose: true
+          commit-header: '[LeetCode Sync]'
+
+  bui    runs-on: ubuntu-latest
     steps:
       - name: Sync LeetCode Solutions
         uses: joshcai/leetcode-sync@v1.7
