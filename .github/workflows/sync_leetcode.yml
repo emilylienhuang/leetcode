@@ -8,6 +8,7 @@ on:
 jobs:
   sync_leetcode:
     runs-on: ubuntu-latest
+    timeout-minutes: 120    
 
     steps:
       # Step 1: Check out the repository
@@ -24,3 +25,4 @@ jobs:
           destination-folder: 'leetcode_solutions'
           verbose: true
           commit-header: '[LeetCode Sync]'
+        continue-on-error:true
