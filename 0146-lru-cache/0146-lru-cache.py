@@ -1,29 +1,48 @@
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.next = None
+        self.prev = None
 class LRUCache:
 
     def __init__(self, capacity: int):
-        self.cache = OrderedDict()
-        self.capacity = capacity
-        print("Initialized OD with capacity " + str(self.capacity))
+        self.cap = capacity
+        self.cache = {} # key to the nodes
+
+        self.left, self.right = Node(0,0), Node(0,0)
+        self.left.next, self.right.prev = self.right, self.left
+        # Left is LRU
+        # right is MRU 
+
+    def remove(self, node):
+        # remove from the list
+        prev, nxt = node.prev, node.next
+        prev.next, nxt.prev = nxt, prev
+    def insert(self, node):
+        # insert at right
+        prev, nxt = self.right.prev, self.right
+        prev.next = nxt.prev = node
+        node.prev = prev
+        node.next = nxt
 
     def get(self, key: int) -> int:
-        print("Getting from the cache")
-        # check if dict or if key in dict
         if key in self.cache:
-            val = self.cache.pop(key)
-            self.cache[key] = val
-            return val
+            self.remove(self.cache[key])
+            self.insert(self.cache[key]) 
+            return self.cache[key].val
         return -1
-
-        
 
     def put(self, key: int, value: int) -> None:
         if key in self.cache:
-            self.cache.pop(key)
-        if len(self.cache) >= self.capacity:
-            self.cache.popitem(last=False)
-        self.cache[key] = value
-
-        
+            self.remove(self.cache[key])
+        self.cache[key] = Node(key, value)
+        self.insert(self.cache[key])
+        if len(self.cache) > self.cap:
+            # remove and evict the LRU
+            lru = self.left.next
+            self.remove(lru)
+            del self.cache[lru.key]
 
 
 # Your LRUCache object will be instantiated and called as such:
