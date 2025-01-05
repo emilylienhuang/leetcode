@@ -1,33 +1,25 @@
-class LRUCache(object):
+class LRUCache:
 
-    def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
+    def __init__(self, capacity: int):
         self.cache = OrderedDict()
         self.capacity = capacity
+        print("Initialized OD with capacity " + str(self.capacity))
 
-
-    def get(self, key):
-        """
-        :type key: int
-        :rtype: int
-        """
+    def get(self, key: int) -> int:
+        print("Getting from the cache")
+        # check if dict or if key in dict
         if key in self.cache:
-            value = self.cache.pop(key)
-            self.cache[key] = value
-            return value
+            val = self.cache.pop(key)
+            self.cache[key] = val
+            return val
         return -1
 
-    def put(self, key, value):
-        """
-        :type key: int
-        :type value: int
-        :rtype: None
-        """
+        
+
+    def put(self, key: int, value: int) -> None:
         if key in self.cache:
             self.cache.pop(key)
-        elif len(self.cache) >= self.capacity:
+        if len(self.cache) >= self.capacity:
             self.cache.popitem(last=False)
         self.cache[key] = value
 
