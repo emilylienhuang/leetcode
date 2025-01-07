@@ -13,8 +13,8 @@ class Solution:
             if not subRoot:
                 return True
             
-            if root.val == subRoot.val:
-                return self.sameTree(root, subRoot)
+            if self.sameTree(root, subRoot):
+                return True
             
             return dfs(root.left, subRoot) or dfs(root.right, subRoot)
         return dfs(root, subRoot)
@@ -22,11 +22,8 @@ class Solution:
     def sameTree(self, root, subRoot):
         if not root and not subRoot:
             return True
-        if not root:
+        if not root or not subRoot:
             return False
-        if not subRoot:
-            return False
-        
-        if root.val != subRoot.val:
-            return False
-        return self.sameTree(root.left, subRoot.left) and self.sameTree(root.right, subRoot.right)
+        if root and subRoot and root.val == subRoot.val:
+            return self.sameTree(root.left, subRoot.left) and self.sameTree(root.right, subRoot.right)
+        return False
