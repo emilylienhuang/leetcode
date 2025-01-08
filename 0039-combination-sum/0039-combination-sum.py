@@ -1,23 +1,21 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        '''
-            NOTE: this problem requires backtracking
-        '''
-        res = []
+        
+        res = set()
+
         def backtrack(comb, idx, total):
             if total == target:
-                res.append(comb[:])
+                res.add(tuple(comb[:]))
                 return
             if total > target:
-                return
+                return 
             if idx >= len(candidates):
                 return
-                
+            
             comb.append(candidates[idx])
             backtrack(comb, idx, total + candidates[idx])
             comb.pop()
             backtrack(comb, idx + 1, total)
             return 
         backtrack([], 0, 0)
-        return res
-
+        return list(res)
