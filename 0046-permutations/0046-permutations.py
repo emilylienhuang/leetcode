@@ -1,17 +1,14 @@
-class Solution(object):
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        if len(nums) == 1:
-            return [nums]
-        
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # How is a permutation different than a combination?
+        # Permutation are the same numbers in different orderings
+        # no repeats
+
         res = []
         def backtrack(start):
             if start == len(nums):
                 res.append(nums[:])
-                return
+                return 
             for i in range(start, len(nums)):
                 nums[start], nums[i] = nums[i], nums[start]
                 backtrack(start + 1)
