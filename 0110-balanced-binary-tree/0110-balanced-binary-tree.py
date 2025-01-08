@@ -6,18 +6,14 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return True
         
-        def dfs(root):
-            if not root:
+        def dfs(node):
+            if not node:
                 return [True, 0]
             
-            leftEval, leftDepth = dfs(root.left)
-            rightEval, rightDepth = dfs(root.right)
+            leftEval, leftDepth = dfs(node.left)
+            rightEval, rightDepth = dfs(node.right)
 
             balanced = leftEval and rightEval and abs(leftDepth - rightDepth) <= 1
             return [balanced, max(leftDepth, rightDepth) + 1]
-        evaluation, depth = dfs(root)
-        return evaluation
-
+        return dfs(root)[0]
