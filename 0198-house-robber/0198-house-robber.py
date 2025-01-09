@@ -1,5 +1,7 @@
 class Solution:
     def rob(self, loot: List[int]) -> int:
+        if len(loot) == 1:
+            return loot[0]
         n = len(loot)
         dp = [-1] * (n)
         dp[0] = loot[0]
