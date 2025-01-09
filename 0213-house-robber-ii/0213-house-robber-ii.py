@@ -12,4 +12,6 @@ class Solution:
 
         if len(nums) == 1:
             return nums[0]
+        elif len(nums) == 2:
+            return max(nums[0], nums[1])
         return max(house_rob(nums[:-1]), house_rob(nums[1:]))
