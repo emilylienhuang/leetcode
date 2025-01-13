@@ -3,12 +3,16 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
         
-        dp = [n for n in nums]
+        res = max(nums)
 
-        maxProd = float(-inf)
-        for i in range(1, len(nums)):
-            dp[i] = max(dp[i-1] * nums[i], dp[i])
-            maxProd = max(maxProd, dp[i])
-        return maxProd
+        curr_min, curr_max = 1, 1
+
+        for n in nums:
+            temp = curr_max * n
+            curr_max = max(temp, curr_min * n, n)
+            curr_min = min(temp, curr_min * n, n)
+
+            res = max(curr_max, res)
+        return res
 
 
