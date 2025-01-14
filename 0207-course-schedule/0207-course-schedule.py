@@ -1,29 +1,27 @@
-from collections import defaultdict
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        if numCourses == 1:
-            return True
-        adj_list = collections.defaultdict(list)
+        pre_to_course = collections.defaultdict(list)
 
-        for want, need in prerequisites:
-            adj_list[need].append(want)
+        for course, pre in prerequisites:
+            pre_to_course[pre].append(course)
         
-        seen = set()
-        def canTake(course):
-            if course in seen:
-                return False
-            if not adj_list[course]:
+        visited = set()
+        def dfs(course):
+            if not pre_to_course[course]:
                 return True
-            seen.add(course)
-            for other in adj_list[course]:
-                if not canTake(other):
-                    return False
-            seen.remove(course)
-            adj_list[course] = []
-            return True
-
-        for course in range(numCourses):
-            if not canTake(course):
+            
+            if course in visited:
                 return False
-
+            
+            visited.add(course)
+            for c in pre_to_course[course]:
+                if not dfs(c):
+                    return False
+            visited.remove(course)
+            pre_to_course[course] = []
+            return True
+        
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
         return True
