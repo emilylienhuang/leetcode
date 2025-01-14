@@ -1,5 +1,7 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # Time: O(#prereqs + numCourses)
+        # Space: O(#prereqs + numCourses)
         pre_to_course = collections.defaultdict(list)
 
         for course, pre in prerequisites:
