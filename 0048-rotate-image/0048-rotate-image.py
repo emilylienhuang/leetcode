@@ -3,9 +3,11 @@ class Solution:
         """
         Do not return anything, modify matrix in-place instead.
         """
-        n = len(matrix)
-        matrix.reverse()
-        for i in range(n):
-            for j in range(i + 1, n):
-                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-        
+        rows = len(matrix)
+        cols = len(matrix[0])
+
+        matrix.reverse() # flip rows to place the diagonals in the right place
+        # iterate over the square matrix upper triangle and transpose
+        for r in range(rows):
+            for c in range(r + 1, cols):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
