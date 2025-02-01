@@ -11,8 +11,6 @@ class Solution:
         def dfs(root, depth):
             if not root:
                 return 0
-            nonlocal maxDepth
-            maxDepth = max(depth + 1, maxDepth)
 
             return 1 + max(dfs(root.left, depth + 1), dfs(root.right, depth + 1))
             
