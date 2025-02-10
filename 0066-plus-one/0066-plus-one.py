@@ -1,17 +1,14 @@
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
-        for i in range(len(digits) -1, 0, -1):
-            if i == len(digits) - 1:
-                digits[i] += 1
-            
-            if digits[i] // 10:
-                digits[i] = 0
-                digits[i - 1] += 1
+        pointer = len(digits) - 1
+        while digits[pointer] == 9 and pointer >= 0:
+            #find the position to insert the 1
+            digits[pointer] = 0
+            pointer -= 1
         
-        if len(digits) == 1:
-            digits[0] += 1
-        
-        if digits[0] // 10 == 1:
-            digits[0] = 0
+        if pointer == -1:
             digits.insert(0, 1)
+        else:
+            digits[pointer] += 1
         return digits
+
