@@ -1,7 +1,7 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # Time: O(#prereqs + numCourses)
-        # Space: O(#prereqs + numCourses)
+        # Time: O(#prereqs + numCourses) <= iterate over all courses and create the prereq hash
+        # Space: O(#prereqs + numCourses) <= call stack plus adj list
         pre_to_course = collections.defaultdict(list)
 
         for course, pre in prerequisites:
