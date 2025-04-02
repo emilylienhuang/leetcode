@@ -15,17 +15,22 @@ class Solution:
         if not intervals:
             return [newInterval]
 
-        new_start, new_end = newInterval
+        n = len(intervals)
+        i = 0
+        res = []
 
-        res = deque([newInterval])
-    
-        for c_start, c_end in intervals:
-            r_start, r_end = res[-1]
-            if  c_end < r_start:
-                res.appendleft([c_start, c_end])
-            elif c_start > r_end:
-                res.append([c_start, c_end])
-            else:
-                res[-1] = [min(c_start, r_start), max(c_end, r_end)]
-        return list(res)
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
+        
+        while i < n and newInterval[1] >= intervals[i][0]:
+            newInterval[0] = min(newInterval[0], intervals[i][0])
+            newInterval[1] = max(newInterval[1], intervals[i][1])
+            i += 1
+        res.append(newInterval)
+
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+        return res
             
