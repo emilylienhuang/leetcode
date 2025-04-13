@@ -3,21 +3,15 @@ class StockSpanner:
     def __init__(self):
         # store the days 
         self.stack = []
-        self.temp_stack = []
 
     def next(self, price: int) -> int:
-        self.stack.append(price)
-
-        count_leq = 0
-        while self.stack and self.stack[-1] <= price:
-            num = self.stack.pop()
-            if num <= price:
-                count_leq += 1
-            self.temp_stack.append(num)
-        
-        while self.temp_stack:
-            self.stack.append(self.temp_stack.pop())
-        return count_leq
+        self.stack.append((price, 1))
+        span = 0
+        while self.stack and self.stack[-1][0] <= price:
+            _, prev_span = self.stack.pop()
+            span += prev_span
+        self.stack.append((price, span))
+        return span
 
 # Your StockSpanner object will be instantiated and called as such:
 # obj = StockSpanner()
