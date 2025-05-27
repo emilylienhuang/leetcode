@@ -1,24 +1,17 @@
-class Solution(object):
-    def topKFrequent(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
-        if len(nums) == 1:
-            return nums
-        d = collections.defaultdict(int)
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        unique_elems = {}
         for num in nums:
-            d[num] += 1
+            if num in unique_elems:
+                unique_elems[num] += 1
+            else:
+                unique_elems[num] = 1
         
         heap = []
-        for num, count in d.items():
-            heapq.heappush(heap, (count, num))
-            while len(heap) > k:
-                heapq.heappop(heap)
+        for key, val in unique_elems.items():
+            heapq.heappush(heap, (-val, key))
         
-        res = []
-        while heap:
-            _, num = heapq.heappop(heap)
-            res.append(num)
-        return res
+        ans = []
+        for _ in range(k):
+            ans.append(heapq.heappop(heap)[1])
+        return ans
